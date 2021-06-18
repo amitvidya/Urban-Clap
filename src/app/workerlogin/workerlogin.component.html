@@ -1,0 +1,172 @@
+<div class="background-photo">
+
+  <nav class="navbar navbar-expand-lg navbar-dark " style="background-color: black">
+    <a class="navbar-brand" style="color: white">&nbsp;&nbsp;<i class="fas fa-people-carry"></i>&nbsp;&nbsp;Urban Clap</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item active">
+          <a class="nav-link" routerLink="" (click)="checkse()">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item dropdown active">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" style="cursor: pointer" data-toggle="dropdown" >
+            Workers
+
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+            <a class="dropdown-item"  routerLink="../signup">Sign up</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+<div class="container">
+
+  <form #workerloginform="ngForm" (ngSubmit)="workerlogin(workerloginform.value)">
+    <div class="container col-sm-6 "  style="color: white" >
+      <br><br>
+      <br><br>
+      <br><br>
+      <h3 >&nbsp;&nbsp;&nbsp;Worker Login</h3>
+      <br>
+      <div class="form-row form-group">
+        <label for="email">Email</label>
+        <input type="email" #email='ngModel' required="" ngModel="" name="email" id="email" class="form-control" pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$">
+        <label class="text-danger" *ngIf="email.touched&&email.errors&&email.errors.required">Enter email</label>
+        <label class="text-danger" *ngIf="email.touched&&email.errors&&email.errors.pattern">Enter valid email</label>
+      </div>
+
+      <div class="form-row form-group">
+        <label for="password">Password</label>
+        <input type="password" #password='ngModel' required="" ngModel="" name="password" id="password" class="form-control" >
+        <label class="text-danger" *ngIf="password.touched&&password.errors&&password.errors.required">Enter password</label>
+
+      </div>
+
+      <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-light btn-xl" [disabled]="!workerloginform.valid" >&nbsp;&nbsp;&nbsp;
+       <br><br> <span [innerHTML]="ServerResponse"></span>
+      </div>
+    </div>
+    <br><br><br><br><br><br><br><br><br>
+  </form>
+</div>
+  <footer class="page-footer">
+
+    <div style="background-color: #5b5a5a;">
+      <div class="container">
+
+
+        <div class="row py-4 d-flex align-items-center">
+
+
+          <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
+            <h6 class="mb-0">Get connected with us on social networks!</h6>
+          </div>
+
+          <div class="col-md-6 col-lg-7 text-center text-md-right">
+
+
+            <a class="fb-ic">
+              <i class="fab fa-facebook-f white-text mr-4"> </i>
+            </a>
+
+            <a class="tw-ic">
+              <i class="fab fa-twitter white-text mr-4"> </i>
+            </a>
+
+            <a class="gplus-ic">
+              <i class="fab fa-google-plus-g white-text mr-4"> </i>
+            </a>
+
+            <a class="li-ic">
+              <i class="fab fa-linkedin-in white-text mr-4"> </i>
+            </a>
+
+            <a class="ins-ic">
+              <i class="fab fa-instagram white-text"> </i>
+            </a>
+
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container text-center text-md-left mt-5">
+
+      <div class="row mt-3">
+
+        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+
+          <h6 class="text-uppercase font-weight-bold">Urban Clap</h6>
+          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>Urban Company is an Indian gig marketplace that offers home
+            installation, maintenance and repair services, and home beauty and wellness services.</p>
+
+        </div>
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+
+          <h6 class="text-uppercase font-weight-bold">Location</h6>
+          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>
+            <a href="#!">Mumbai</a>
+          </p>
+          <p>
+            <a href="#!">Punjab</a>
+          </p>
+          <p>
+            <a href="#!">Delhi</a>
+          </p>
+          <p>
+            <a href="#!">Pune</a>
+          </p>
+
+        </div>
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+
+          <h6 class="text-uppercase font-weight-bold">Useful links</h6>
+          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>
+            <a href="#!">Your Account</a>
+          </p>
+          <p>
+            <a href="#!">Become an Affiliate</a>
+          </p>
+          <p>
+            <a href="#!">Shipping Rates</a>
+          </p>
+          <p>
+            <a href="#!">Help</a>
+          </p>
+
+        </div>
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+
+          <h6 class="text-uppercase font-weight-bold">Contact</h6>
+          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>
+            <i class="fas fa-home mr-3"></i> Amritsar,Punjab</p>
+          <p>
+            <i class="fas fa-envelope mr-3"></i> amitvidya67@gmail.com</p>
+          <p>
+            <i class="fas fa-phone mr-3"></i> +91-9855287678</p>
+
+        </div>
+      </div>
+
+
+    </div>
+    <div class="footer-copyright text-center py-3">© 2021 Copyright:
+      <span> Urban Clap</span>
+    </div>
+
+  </footer>
+</div>

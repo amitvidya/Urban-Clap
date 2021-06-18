@@ -1,0 +1,134 @@
+<div class="background-photo" >
+
+  <nav class="navbar navbar-expand-lg navbar-dark " style="background-color: black">
+    <a class="navbar-brand" style="color: white">&nbsp;&nbsp;<i class="fas fa-people-carry"></i>&nbsp;&nbsp;Urban Clap</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item active">
+          <a class="nav-link" routerLink="../home">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" data-toggle="modal" data-target="#exampleModal" style="cursor: pointer">Profile <span class="sr-only">(current)</span></a>
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Profile</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body" *ngFor="let data of servicedata">
+                  <p><b>Name&nbsp; :</b>&nbsp;&nbsp;{{data.name}}</p>
+                  <p>------------------------</p>
+                  <p><b>Mobileno&nbsp; :</b> &nbsp;&nbsp;    {{data.mobileno}}</p>
+                  <p>------------------------</p>
+                  <p><b>Photo&nbsp; : </b>&nbsp;&nbsp;   <img src="http://localhost:3000/{{data.photo}}" style="height: 80px"></p>
+                  <p>------------------------</p>
+                  <p><b>Discription&nbsp;: </b>&nbsp;&nbsp;    {{data.discription}}</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModa">Update</button>
+                </div>
+              </div>
+            </div>
+            <div class="modal fade" id="exampleModa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabe" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabe">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body" *ngFor="let data of servicedata">
+                    <form #usersignupform="ngForm" (ngSubmit)="saveuserdata(usersignupform.value)">
+                      <div class="form-group">
+                        <label for="fullname">Fullname</label>
+                        <input type="text" #fullname='ngModel' ngModel="{{data.name}}" name="fullname" id="fullname"  class="form-control">
+
+                      </div>
+                      <div class="form-group">
+                        <label for="photo"><img src="http://localhost:3000/{{data.photo}}" style="height: 80px"></label>
+                        <input type="file" name="photo" id="photo"  class="form-control"  (change)="getfile($event)">
+                      </div>
+                      <div class="form-group">
+                        <label for="discription">Discription</label>
+                        <textarea name="discription" id="discription" #discription='ngModel' ngModel="{{data.discription}}" required="" class="form-control"></textarea>
+                      </div>
+                      <div class="form-group">
+                        <input type="submit" value="submit" class="btn btn-dark btn-xl" [disabled]="(!usersignupform.valid)" >
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" routerLink="../login" (click)="logout()">Logout <span class="sr-only">(current)</span></a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+  <div class="container" style="color:white;">
+  <form #serviceform="ngForm" (ngSubmit)="category1(serviceform.value)">
+    <div class="container col-sm-6">
+      <br><br>
+      <h3 >&nbsp;&nbsp;&nbsp;Manage Services</h3>
+      <br>
+      <div class="form-row form-group">
+        <label for="service">Services</label>
+        <input type="text" #service='ngModel' required="" ngModel="" name="service" id="service" class="form-control" >
+        <label class="text-danger" *ngIf="service.touched&&service.errors&&service.errors.required">Enter category</label>
+      </div>
+
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input type="number" #price='ngModel' required="" ngModel="" name="price" id="price" class="form-control" >
+        <label class="text-danger" *ngIf="price.touched&&price.errors&&price.errors.required">Enter category</label>
+      </div>
+
+      <div class="form-group">
+        <input type="submit" value="Add" class="btn btn-light btn-xl" [disabled]="!serviceform.valid" >&nbsp;&nbsp;&nbsp;
+        <br><br> <span [innerHTML]="ServerResponse"></span>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="container" >
+  <div class="table-responsive" *ngIf="fetdata.length>0" >
+    <table class="table table-striped table-bordered " style="color:white;">
+      <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Service</th>
+        <th>Price</th>
+        <th>control</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of fetdata,let sr=index">
+        <td>{{sr+1}}</td>
+        <td>{{data.servicename}}</td>
+        <td>{{data.price}}</td>
+        <td><button class="btn btn-danger" (click)="deletcate(data.pid)">Delete Category</button></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</div>

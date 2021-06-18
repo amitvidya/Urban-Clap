@@ -1,0 +1,59 @@
+<div class="background-photo" style="color:white ">
+<div class="container">
+
+  <form #subcategoriesform="ngForm" (ngSubmit)="subcategory1(subcategoriesform.value)">
+    <div class="container col-sm-6">
+      <br><br>
+      <h3 >&nbsp;&nbsp;&nbsp;Add Category</h3>
+      <br>
+      <div class="form-group">
+        <label for="category">Select Category</label>
+        <select class="form-control" id="category" name="category" #category='ngModel' ngModel="" >
+          <option value="">Select Category</option>
+
+          <option  *ngFor="let categoryOne of categories "  value="{{categoryOne.categoryname}}">{{categoryOne.categoryname}}</option>
+        </select>
+      </div>
+      <div class="form-row form-group">
+        <label for="subcategory">Subcategory</label>
+        <input type="text" #subcategory='ngModel' required="" ngModel="" name="subcategory" id="subcategory" class="form-control" >
+        <label class="text-danger" *ngIf="subcategory.touched&&subcategory.errors&&subcategory.errors.required">Enter Subcategory</label>
+      </div>
+
+      <div class="form-group">
+        <label for="discription">Discription</label>
+        <textarea name="discription" id="discription" #discription='ngModel' ngModel="" required="" class="form-control"></textarea>
+      </div>
+
+      <div class="form-group">
+        <input type="submit" value="Add" class="btn  btn-light btn-xl" [disabled]="!subcategoriesform.valid" >&nbsp;&nbsp;&nbsp;
+        <br><br> <span [innerHTML]="ServerResponse"></span>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="container">
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered " style="color: white">
+      <thead>
+      <tr>
+        <th>Srno</th>
+        <th>subcategory</th>
+        <th>Discription</th>
+        <th>category</th>
+        <th>control</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of fetdata,let sr=index">
+        <td>{{sr+1}}</td>
+        <td>{{data.subcategoryname}}</td>
+        <td>{{data.subdiscription}}</td>
+        <td>{{data.categoryname}}</td>
+        <td><button class="btn btn-danger" (click)="deletcate(data.subcategoryname)">Delete Subcategory</button></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>

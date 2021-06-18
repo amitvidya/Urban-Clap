@@ -1,0 +1,40 @@
+
+<div class="background-photo">
+  <div class="container">
+    <form #adminloginform="ngForm" (ngSubmit)="adminlogin(adminloginform.value) ">
+      <div class="container col-sm-6" style="color: white ">
+        <br><br>
+        <br><br>
+        <br><br>
+        <h3 >&nbsp;&nbsp;&nbsp;Admin Login</h3>
+        <br>
+        <div class="form-row form-group">
+          <label for="username">Username</label>
+          <input type="username" #username='ngModel' required="" ngModel="" name="username" id="username" class="form-control" >
+          <label class="text-danger" *ngIf="username.touched&&username.errors&&username.errors.required">Enter username</label>
+        </div>
+        <div class="form-row form-group">
+          <label for="email">Email</label>
+          <input type="email" #email='ngModel' required="" ngModel="" name="email" id="email" class="form-control" pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$">
+          <label class="text-danger" *ngIf="email.touched&&email.errors&&email.errors.required">Enter email</label>
+          <label class="text-danger" *ngIf="email.touched&&email.errors&&email.errors.pattern">Enter valid email</label>
+        </div>
+
+        <div class="form-row form-group">
+          <label for="password">Password</label>
+          <input type="password" #password='ngModel' required="" ngModel="" name="password" id="password" class="form-control" >
+          <label class="text-danger" *ngIf="password.touched&&password.errors&&password.errors.required">Enter password</label>
+
+        </div>
+
+        <div class="form-group ">
+          <input type="submit" value="Submit" class="btn  btn-xl btn-light" [disabled]="!adminloginform.valid" >&nbsp;&nbsp;
+          <br><br> <span [innerHTML]="ServerResponse"></span>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+

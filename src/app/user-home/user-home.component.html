@@ -1,0 +1,321 @@
+<div >
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: black">
+    <a class="navbar-brand" style="color: white">&nbsp;&nbsp;<i class="fas fa-people-carry"></i>&nbsp;&nbsp;Urban Clap</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a *ngIf="prev1.length>0" class="nav-link" routerLink="">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link"  data-toggle="modal" data-target="#example" style="cursor: pointer" >Previous Services<span class="sr-only">(current)</span></a>
+          <div class="modal fade" id="example" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" >Previous Services</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body" *ngFor="let data of prev1 ,let sr=index" >
+                  <span><p><b>{{sr+1}}.</b></p><p><b>Worker Email :</b> {{data.email}}</p>&nbsp;&nbsp;<p><b>Date Of Service :</b> {{data.dateofser}}</p></span>
+                  <div>---------------------------------------------------</div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary"  data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </li>
+        <li class="nav-item active">
+          <a  *ngIf="prev.length>0" class="nav-link" data-toggle="modal" data-target="#exampleMod" style="cursor: pointer">Give Rating<span class="sr-only">(current)</span></a>
+          <div class="modal fade" id="exampleMod" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" >Done Services</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body" *ngFor="let data of prev ,let sr=index" >
+                  <span><p><b>{{sr+1}}.</b></p><p><b>Worker Email :</b> {{data.email}}</p>&nbsp;&nbsp;<p><b>Date Of Service :</b> {{data.dateofser}}</p></span>
+                  <button class=" btn btn-xl btn-dark" data-toggle="modal" data-target="#exampleModa" (click)="email(data.serproid,data.useremail,data.id)">Give Rating</button>
+                  <div>---------------------------------------------------</div>
+               </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary"  data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" routerLink="../login" (click)="logout()">Logout<span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+<div class="container ">
+
+  <br>
+  <br>
+<h2 style="text-align: center">Services Offered</h2>
+  <br>
+  <br>
+  <div class="row" >
+    <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let data of fetdata,let sr=index">
+
+      <a routerLink="#" class="rounded mx-auto d-block" (click)="workerdata(data.servicename)"><h4><i class="fas fa-hard-hat"></i> {{data.servicename}}</h4></a>
+
+      <br>
+      <br></div>
+
+  </div>
+  <br>
+  <br>
+    <h2 *ngIf="fetdat.length>0" style="text-align: center">Workers</h2>
+  <div class="row ">
+
+  <div class="card  col-lg-4 col-md-6 col-sm-12 jumbotron mr-2 size"   *ngFor="let data of fetdat">
+   <br>
+    <img src="http://localhost:3000/{{data.photo}}" class="card-img-top rounded mx-auto d-block" style="width: 200px ;height: 200px">
+    <div class="card-body">
+      <p><b>Name :</b>{{data.name}}</p>
+      <p><b>Pay Per Hour :</b>{{data.payperhour}}</p>
+      <p><b>Mobile No :</b>{{data.mobileno}}</p>
+    <button type="button" class="btn btn-dark"  data-toggle="modal" data-target="#exampleModalLong" (click)="getfile(data.sid)">Ratings</button>
+      &nbsp;&nbsp;
+    <button type="button" class="btn btn-dark" (click)="selectid(data.sid, data.payperhour)" data-toggle="modal" data-target="#exampleModal">Book</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Booking</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #usersignupform="ngForm" (ngSubmit)="saveuserdata(usersignupform.value)">
+          <div class="container col-sm-7">
+
+            <div class="form-group">
+              <label for="servdate">Date of service</label>
+              <input type="date" #servdate='ngModel' class="form-control" required="" ngModel="" name="servdate" id="servdate">
+            </div>
+
+            <div class="form-group">
+              <label for="timefrom">Working time from</label>
+              <input type="time" #timefrom='ngModel' class="form-control" required="" ngModel="" name="timefrom" id="timefrom">
+            </div>
+            <div class="form-group">
+              <label for="timeto">Working time To</label>
+              <input type="time" #timeto='ngModel' class="form-control" required="" ngModel="" name="timeto" id="timeto">
+            </div>
+
+
+            <br>
+            <div class="form-group">
+              <input type="submit" value="Book Now" class="btn  btn-dark" [disabled]="(!usersignupform.valid) ">
+              <p>{{ServerResponse}}</p>
+
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="modal fade" id="exampleModa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" >Give Rating</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #ratingform="ngForm" (ngSubmit)="ratedata(ratingform.value)">
+
+              <div class="form-group">
+                <label>Rate</label>
+                <br>
+              <ngb-rating [max]="5" [(rate)]="starRating" [readonly]="false"></ngb-rating>
+              </div>
+                <div class="form-group">
+                <label for="comment">Comment</label>
+                <input type="text" #comment='ngModel' class="form-control" required="" ngModel="" name="comment" id="comment">
+              </div>
+
+              <br>
+              <div class="form-group">
+                <input type="submit" value="Rate" class="btn  btn-dark btn-xl" (click)="changesta()" [disabled]="(!ratingform.valid) ">
+                <p>{{Serverres}}</p>
+
+              </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" >Ratings</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" *ngFor="let data of fina,let sr=index">
+          <p><b>{{sr+1}}.</b></p>
+          <p><b>User Email : </b>{{data.email}}</p>
+          <p><b>Rating : </b><ngb-rating [max]="5" [rate]="data.rating" [readonly]="true"></ngb-rating></p>
+          <p><b>Comment : </b>{{data.comment}}</p>
+          <p>---------------------------------------</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="page-footer">
+
+    <div style="background-color: #5b5a5a;">
+      <div class="container">
+
+
+        <div class="row py-4 d-flex align-items-center">
+
+
+          <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
+            <h6 class="mb-0">Get connected with us on social networks!</h6>
+          </div>
+
+          <div class="col-md-6 col-lg-7 text-center text-md-right">
+
+
+            <a class="fb-ic">
+              <i class="fab fa-facebook-f white-text mr-4"> </i>
+            </a>
+
+            <a class="tw-ic">
+              <i class="fab fa-twitter white-text mr-4"> </i>
+            </a>
+
+            <a class="gplus-ic">
+              <i class="fab fa-google-plus-g white-text mr-4"> </i>
+            </a>
+
+            <a class="li-ic">
+              <i class="fab fa-linkedin-in white-text mr-4"> </i>
+            </a>
+
+            <a class="ins-ic">
+              <i class="fab fa-instagram white-text"> </i>
+            </a>
+
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container text-center text-md-left mt-5">
+
+      <div class="row mt-3">
+
+        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+
+          <h6 class="text-uppercase font-weight-bold">Urban Clap</h6>
+          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>Urban Company is an Indian gig marketplace that offers home
+            installation, maintenance and repair services, and home beauty and wellness services.</p>
+
+        </div>
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+
+          <h6 class="text-uppercase font-weight-bold">Location</h6>
+          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>
+            <a href="#!">Mumbai</a>
+          </p>
+          <p>
+            <a href="#!">Punjab</a>
+          </p>
+          <p>
+            <a href="#!">Delhi</a>
+          </p>
+          <p>
+            <a href="#!">Pune</a>
+          </p>
+
+        </div>
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+
+          <h6 class="text-uppercase font-weight-bold">Useful links</h6>
+          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>
+            <a href="#!">Your Account</a>
+          </p>
+          <p>
+            <a href="#!">Become an Affiliate</a>
+          </p>
+          <p>
+            <a href="#!">Shipping Rates</a>
+          </p>
+          <p>
+            <a href="#!">Help</a>
+          </p>
+
+        </div>
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+
+          <h6 class="text-uppercase font-weight-bold">Contact</h6>
+          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>
+            <i class="fas fa-home mr-3"></i> Amritsar,Punjab</p>
+          <p>
+            <i class="fas fa-envelope mr-3"></i> amitvidya67@gmail.com</p>
+          <p>
+            <i class="fas fa-phone mr-3"></i> +91-9855287678</p>
+
+        </div>
+      </div>
+
+
+    </div>
+    <div class="footer-copyright text-center py-3">© 2021 Copyright:
+      <span> Urban Clap</span>
+    </div>
+
+  </footer>
+</div>
+

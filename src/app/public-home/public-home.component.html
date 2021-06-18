@@ -1,0 +1,262 @@
+<div class="background-photo">
+
+
+  <nav class="navbar navbar-expand-lg navbar-dark  " style="background-color: black">
+    <a class="navbar-brand" style="color: white">&nbsp;&nbsp;<i class="fas fa-people-carry"></i>&nbsp;&nbsp;Urban Clap</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item active">
+          <a class="nav-link" routerLink="" (click)="checkse()">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item dropdown active">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" style="cursor: pointer" data-toggle="dropdown" >
+            Workers
+
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+            <a class="dropdown-item"  routerLink="../login">Login</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <div class="container " style="color: white" >
+
+  <form #usersignupform="ngForm" (ngSubmit)="saveuserdata(usersignupform.value)">
+    <div class="container col-sm-7">
+      <br>
+      <br>
+      <h2>&nbsp;&nbsp;&nbsp;Worker Signup</h2>
+      <br><br>
+      <div class="form-group">
+<label for="category">Select Category</label>
+  <select class="form-control" id="category" name="category" #category='ngModel' ngModel="" (change)="getSubcategory(category.value)">
+    <option value="">Select Category</option>
+
+    <option  *ngFor="let categoryOne of categories "  value="{{categoryOne.categoryname}}">{{categoryOne.categoryname}}</option>
+  </select>
+</div>
+<div class="form-group">
+<label for="subcategory">Select Category</label>
+  <select class="form-control" id="subcategory" name="subcategory" #subcategory='ngModel' ngModel="">
+    <option value="">Select SubCategory</option>
+    <option  *ngFor="let subcategoryOne of subcategories "  value="{{subcategoryOne.subcategoryname}}">{{subcategoryOne.subcategoryname}}</option>
+  </select>
+</div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" #email='ngModel' required="" ngModel="" name="email" id="email" class="form-control" (blur)="checkemailexist(email)" pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$">
+      <label class="text text-danger">{{emailresponse}}</label>
+      <label class="text-danger" *ngIf="email.touched&&email.errors&&email.errors.required">enter email</label>
+      <label class="text-danger" *ngIf="email.touched&&email.errors&&email.errors.pattern">enter valid email</label>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" #password='ngModel' required="" ngModel="" name="password" id="password" class="form-control" >
+      <label class="text-danger" *ngIf="password.touched&&password.errors&&password.errors.required">enter password</label>
+
+    </div>
+    <div class="form-group">
+      <label for="password">Confirm Password</label>
+      <input type="password" #confirmpassword='ngModel' required="" ngModel="" name="confirmpassword" id="confirmpassword"
+             class="form-control" (blur)="checkpassword(password,confirmpassword)">
+      <label class="text-danger" *ngIf="confirmpassword.touched&&confirmpassword.errors&&confirmpassword.errors.required">enter password</label>
+      <label class="text-danger" *ngIf="!passwordmatch">Password and confirm password not match</label>
+
+    </div>
+    <div class="form-group">
+      <label for="fullname">Fullname</label>
+      <input type="text" #fullname='ngModel' ngModel="" name="fullname" id="fullname" class="form-control">
+
+    </div>
+    <div class="form-group">
+      <label for="mobileno">Mobileno</label>
+      <input type="text" #mobileno='ngModel' ngModel="" required="" name="mobileno" id="mobileno" minlength="10" maxlength="10" class="form-control" >
+      <div *ngIf="mobileno.errors&&(mobileno.touched||mobileno.dirty)">
+        <span class="alert alert-danger" *ngIf="mobileno.errors.required">Mobile no is required</span>
+        <span class="alert alert-danger" *ngIf="mobileno.errors.minlength">Mobile no must contain 10 digits</span>
+      </div>
+    </div>
+   <div class="form-group">
+     <label for="city">City</label>
+     <input type="text" #city='ngModel' class="form-control" required="" ngModel="" name="city" id="city">
+   </div>
+    <div class="form-group">
+      <label for="pay">PayPerhour</label>
+      <input type="number" #pay='ngModel' class="form-control" required="" ngModel="" name="pay" id="pay">
+    </div>
+    <div class="form-group">
+      <label for="workhourfrom">Working Hour From</label>
+      <input type="time" #workhourfrom='ngModel' class="form-control" required="" ngModel="" name="workhourfrom" id="workhourfrom">
+    </div>
+    <div class="form-group">
+      <label for="workhourto">Working Hour To</label>
+      <input type="time" #workhourto='ngModel' class="form-control" required="" ngModel="" name="workhourto" id="workhourto">
+    </div>
+    <div class="form-group">
+      <label for="workdayfrom">Workinhg Day From</label>
+      <select class="form-control" id="workdayfrom" name="workdayfrom" class="form-control" required="" #workdayfrom='ngModel' ngModel="">
+        <option value="">Select Days</option>
+        <option value="Sunday" >Sunday</option>
+        <option value="Monday" >Monday</option>
+        <option value="Tuesday" >Tuesday</option>
+        <option value="Wednesday" >Wednesday</option>
+        <option value="Thursday" >Thursday</option>
+        <option value="Friday" >Friday</option>
+        <option value="Saturday" >Saturday</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="workdayto">Workinhg Day From</label>
+      <select class="form-control" id="workdayto" name="workdayto" class="form-control" required="" #workdayto='ngModel' ngModel="">
+        <option value="">Select Days</option>
+        <option value="Sunday" >Sunday</option>
+        <option value="Monday" >Monday</option>
+        <option value="Tuesday" >Tuesday</option>
+        <option value="Wednesday" >Wednesday</option>
+        <option value="Thursday" >Thursday</option>
+        <option value="Friday" >Friday</option>
+        <option value="Saturday" >Saturday</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="photo"></label>
+      <input type="file" name="photo" id="photo" class="form-control" (change)="getfile($event)">
+    </div>
+    <div class="form-group">
+      <label for="discription">Discription</label>
+      <textarea name="discription" id="discription" #discription='ngModel' ngModel="" required="" class="form-control"></textarea>
+    </div>
+      <br>
+    <div class="form-group">
+      <input type="submit" value="Submit" class="btn btn-light btn-xl" [disabled]="(!usersignupform.valid) || !(check===true&&check2===true)" >
+      <p>{{ServerResponse}}</p>
+    <br><br><br><br>
+    </div>
+    </div>
+  </form>
+</div>
+  <footer class="page-footer">
+
+    <div style="background-color: #5b5a5a;">
+      <div class="container">
+
+
+        <div class="row py-4 d-flex align-items-center">
+
+
+          <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
+            <h6 class="mb-0">Get connected with us on social networks!</h6>
+          </div>
+
+          <div class="col-md-6 col-lg-7 text-center text-md-right">
+
+
+            <a class="fb-ic">
+              <i class="fab fa-facebook-f white-text mr-4"> </i>
+            </a>
+
+            <a class="tw-ic">
+              <i class="fab fa-twitter white-text mr-4"> </i>
+            </a>
+
+            <a class="gplus-ic">
+              <i class="fab fa-google-plus-g white-text mr-4"> </i>
+            </a>
+
+            <a class="li-ic">
+              <i class="fab fa-linkedin-in white-text mr-4"> </i>
+            </a>
+
+            <a class="ins-ic">
+              <i class="fab fa-instagram white-text"> </i>
+            </a>
+
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container text-center text-md-left mt-5">
+
+      <div class="row mt-3">
+
+        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+
+          <h6 class="text-uppercase font-weight-bold">Urban Clap</h6>
+          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>Urban Company is an Indian gig marketplace that offers home
+            installation, maintenance and repair services, and home beauty and wellness services.</p>
+
+        </div>
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+
+          <h6 class="text-uppercase font-weight-bold">Location</h6>
+          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>
+            <a href="#!">Mumbai</a>
+          </p>
+          <p>
+            <a href="#!">Punjab</a>
+          </p>
+          <p>
+            <a href="#!">Delhi</a>
+          </p>
+          <p>
+            <a href="#!">Pune</a>
+          </p>
+
+        </div>
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+
+          <h6 class="text-uppercase font-weight-bold">Useful links</h6>
+          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>
+            <a href="#!">Your Account</a>
+          </p>
+          <p>
+            <a href="#!">Become an Affiliate</a>
+          </p>
+          <p>
+            <a href="#!">Shipping Rates</a>
+          </p>
+          <p>
+            <a href="#!">Help</a>
+          </p>
+
+        </div>
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+
+          <h6 class="text-uppercase font-weight-bold">Contact</h6>
+          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>
+            <i class="fas fa-home mr-3"></i> Amritsar,Punjab</p>
+          <p>
+            <i class="fas fa-envelope mr-3"></i> amitvidya67@gmail.com</p>
+          <p>
+            <i class="fas fa-phone mr-3"></i> +91-9855287678</p>
+
+        </div>
+      </div>
+
+
+    </div>
+    <div class="footer-copyright text-center py-3">© 2021 Copyright:
+      <span> Urban Clap</span>
+    </div>
+
+  </footer>
+</div>

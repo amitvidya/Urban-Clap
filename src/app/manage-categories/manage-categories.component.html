@@ -1,0 +1,49 @@
+<div class="background-photo" style="color: white">
+<div class="container" >
+
+  <form #categoriesform="ngForm" (ngSubmit)="category1(categoriesform.value)">
+    <div class="container col-sm-6">
+      <br><br>
+      <h3 >&nbsp;&nbsp;&nbsp;Add Category</h3>
+      <br>
+      <div class="form-row form-group">
+        <label for="category">Category</label>
+        <input type="text" #category='ngModel' required="" ngModel="" name="category" id="category" class="form-control" >
+        <label class="text-danger" *ngIf="category.touched&&category.errors&&category.errors.required">Enter category</label>
+      </div>
+
+      <div class="form-group">
+        <label for="discription">Discription</label>
+        <textarea name="discription" id="discription" #discription='ngModel' ngModel="" required="" class="form-control"></textarea>
+      </div>
+
+      <div class="form-group">
+        <input type="submit" value="Add" class="btn btn-xl btn-light" [disabled]="!categoriesform.valid" >&nbsp;&nbsp;&nbsp;
+        <br><br> <span [innerHTML]="ServerResponse"></span>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="container">
+  <div class="table-responsive">
+    <table class="table  table-bordered " style="color: white">
+      <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Category</th>
+        <th>Discription</th>
+        <th>control</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of fetdata,let sr=index">
+        <td>{{sr+1}}</td>
+        <td>{{data.categoryname}}</td>
+        <td>{{data.catdiscription}}</td>
+        <td><button class="btn btn-danger" (click)="deletcate(data.categoryname)">Delete Category</button></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>

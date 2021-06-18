@@ -1,0 +1,77 @@
+
+<div class="background-photo " style="color: white">
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: black">
+    <a class="navbar-brand" style="color: white">&nbsp;&nbsp;<i class="fas fa-people-carry"></i>&nbsp;&nbsp;Urban Clap</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" routerLink="">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item dropdown active">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" style="cursor: pointer" >
+            User
+
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" routerLink="../login" >Login</a>
+
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+<form #usersignupform="ngForm" (ngSubmit)="saveuserdata(usersignupform.value)">
+  <div class="container col-sm-5">
+    <br>
+    <br>
+    <h2>&nbsp;&nbsp;&nbsp;User Signup</h2>
+    <br><br>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" #email='ngModel' required="" ngModel="" name="email" id="email" class="form-control" (blur)="checkemailexist(email.value)" pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$">
+      <label class="text text-danger">{{emailresponse}}</label>
+      <label class="text-danger" *ngIf="email.touched&&email.errors&&email.errors.required">enter email</label>
+      <label class="text-danger" *ngIf="email.touched&&email.errors&&email.errors.pattern">enter valid email</label>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" #password='ngModel' required="" ngModel="" name="password" id="password" class="form-control" >
+      <label class="text-danger" *ngIf="password.touched&&password.errors&&password.errors.required">enter password</label>
+
+    </div>
+    <div class="form-group">
+      <label for="password">Confirm Password</label>
+      <input type="password" #confirmpassword='ngModel' required="" ngModel="" name="confirmpassword" id="confirmpassword"
+             class="form-control" (blur)="checkpassword(password,confirmpassword)">
+      <label class="text-danger" *ngIf="confirmpassword.touched&&confirmpassword.errors&&confirmpassword.errors.required">enter password</label>
+      <label class="text-danger" *ngIf="!passwordmatch">Password and confirm password not match</label>
+
+    </div>
+    <div class="form-group">
+      <label for="fullname">Fullname</label>
+      <input type="text" #fullname='ngModel' ngModel="" name="fullname" required="required" id="fullname" class="form-control">
+
+    </div>
+    <div class="form-group">
+      <label for="mobileno">Mobileno</label>
+      <input type="text" #mobileno='ngModel' ngModel="" required="" name="mobileno" id="mobileno" minlength="10" maxlength="10" class="form-control" >
+      <div *ngIf="mobileno.errors&&(mobileno.touched||mobileno.dirty)">
+        <span class="alert alert-danger" *ngIf="mobileno.errors.required">Mobile no is required</span>
+        <span class="alert alert-danger" *ngIf="mobileno.errors.minlength">Mobile no must contain 10 digits</span>
+      </div>
+    </div>
+
+    <br>
+    <div class="form-group">
+      <input type="submit" value="Submit" class="btn btn-light btn-xl" [disabled]="(!usersignupform.valid) || !(check===true&&check2===true)" >
+     <br><br>
+      <div [innerHTML]="ServerResponse"></div>
+      <br><br><br><br>
+    </div>
+  </div>
+</form>
+</div>
